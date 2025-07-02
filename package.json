@@ -19,15 +19,15 @@
   ],
   "contributes": {
     "languages": [{
-      "id": "godot-dialogmanager",
-      "aliases": ["Godot Dialog Manager", "godot-dialogmanager"],
+      "id": "dialogue",
+      "aliases": ["Godot Dialog Manager", "dialogue"],
       "extensions": [".dialogue"],
       "configuration": "./language-configuration.json"
     }],
     "grammars": [{
-      "language": "godot-dialogmanager",
+      "language": "dialogue",
       "scopeName": "source.dialogue",
-      "path": "./syntaxes/godot-dialogmanager.tmLanguage.json"
+      "path": "./syntaxes/dialogue.tmLanguage.json"
     }]
   }
 }
