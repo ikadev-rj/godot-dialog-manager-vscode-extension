@@ -1,0 +1,25 @@
+{
+  "name": "godot-dialog-manager-node",
+  "displayName": "godot-dialog-manager-node",
+  "description": "to handle godot dialog manager files",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.101.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "godot-dialogmanager",
+      "aliases": ["Godot Dialog Manager", "godot-dialogmanager"],
+      "extensions": [".dialogue"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "godot-dialogmanager",
+      "scopeName": "source.dialogue",
+      "path": "./syntaxes/godot-dialogmanager.tmLanguage.json"
+    }]
+  }
+}
