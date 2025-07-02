@@ -1,333 +1,421 @@
 {
-	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "Godot Dialog Manager",
-	"scopeName": "source.dialogue",
-	"fileTypes": ["dialogue"],
-	"patterns": [
-	  {
-		"include": "#keywords"
-	  },
-	  {
-		"include": "#strings"
-	  },
-	  {
-		"include": "#comments"
-	  },
-	  {
-		"include": "#titles"
-	  },
-	  {
-		"include": "#character-lines"
-	  },
-	  {
-		"include": "#choices"
-	  },
-	  {
-		"include": "#conditions"
-	  },
-	  {
-		"include": "#mutations"
-	  },
-	  {
-		"include": "#jumps"
-	  },
-	  {
-		"include": "#translations"
-	  },
-	  {
-		"include": "#bbcode"
-	  }
-	],
-	"repository": {
-	  "keywords": {
-		"patterns": [
-		  {
-			"name": "keyword.control.godot-dialogmanager",
-			"match": "\\b(if|elif|else|while|for|return|do|set)\\b"
-		  }
-		]
-	  },
-	  "strings": {
-		"name": "string.quoted.double.godot-dialogmanager",
-		"begin": "\"",
-		"end": "\"",
-		"patterns": [
-		  {
-			"name": "constant.character.escape.godot-dialogmanager",
-			"match": "\\\\."
-		  }
-		]
-	  },
-	  "comments": {
-		"patterns": [
-		  {
-			"name": "comment.line.number-sign.dialogue",
-			"match": "#.*$"
-		  }
-		]
-	  },
-	  "titles": {
-		"patterns": [
-		  {
-			"name": "entity.name.section.dialogue",
-			"match": "^~\\s*(.+)$",
-			"captures": {
-			  "1": {
-				"name": "entity.name.section.title.dialogue"
-			  }
-			}
-		  }
-		]
-	  },
-	  "character-lines": {
-		"patterns": [
-		  {
-			"name": "meta.character-line.dialogue",
-			"match": "^([A-Za-z_][A-Za-z0-9_]*)(\\[([^\\]]+)\\])?:\\s*(.*)$",
-			"captures": {
-			  "1": {
-				"name": "entity.name.function.character.dialogue"
-			  },
-			  "2": {
-				"name": "meta.character-id.dialogue"
-			  },
-			  "3": {
-				"name": "string.quoted.single.character-id.dialogue"
-			  },
-			  "4": {
-				"name": "string.unquoted.dialogue-text.dialogue",
-				"patterns": [
-				  {
-					"include": "#bbcode"
-				  },
-				  {
-					"include": "#variables"
-				  }
-				]
-			  }
-			}
-		  }
-		]
-	  },
-	  "choices": {
-		"patterns": [
-		  {
-			"name": "meta.choice.dialogue",
-			"match": "^(\\s*)-\\s*(.+?)\\s*(=>\\s*(.+))?$",
-			"captures": {
-			  "1": {
-				"name": "punctuation.definition.choice.dialogue"
-			  },
-			  "2": {
-				"name": "string.unquoted.choice-text.dialogue",
-				"patterns": [
-				  {
-					"include": "#bbcode"
-				  },
-				  {
-					"include": "#variables"
-				  }
-				]
-			  },
-			  "3": {
-				"name": "meta.choice-action.dialogue"
-			  },
-			  "4": {
-				"name": "entity.name.function.jump-target.dialogue"
-			  }
-			}
-		  }
-		]
-	  },
-	  "conditions": {
-		"patterns": [
-		  {
-			"name": "meta.condition.dialogue",
-			"match": "^(\\s*)if\\s+(.+):\\s*$",
-			"captures": {
-			  "1": {
-				"name": "punctuation.whitespace.dialogue"
-			  },
-			  "2": {
-				"name": "source.embedded.gdscript",
-				"patterns": [
-				  {
-					"include": "#variables"
-				  },
-				  {
-					"include": "#operators"
-				  }
-				]
-			  }
-			}
-		  },
-		  {
-			"name": "keyword.control.conditional.dialogue",
-			"match": "^(\\s*)(elif|else)\\s*:?\\s*$"
-		  }
-		]
-	  },
-	  "mutations": {
-		"patterns": [
-		  {
-			"name": "meta.mutation.dialogue",
-			"match": "^(\\s*)do\\s+(.+)$",
-			"captures": {
-			  "1": {
-				"name": "punctuation.whitespace.dialogue"
-			  },
-			  "2": {
-				"name": "source.embedded.gdscript",
-				"patterns": [
-				  {
-					"include": "#variables"
-				  }
-				]
-			  }
-			}
-		  },
-		  {
-			"name": "meta.mutation.dialogue",
-			"match": "^(\\s*)set\\s+([A-Za-z_][A-Za-z0-9_.]*)\\s*(=|\\+=|-=|\\*=|/=)\\s*(.+)$",
-			"captures": {
-			  "1": {
-				"name": "punctuation.whitespace.dialogue"
-			  },
-			  "2": {
-				"name": "variable.other.dialogue"
-			  },
-			  "3": {
-				"name": "keyword.operator.assignment.dialogue"
-			  },
-			  "4": {
-				"name": "source.embedded.gdscript"
-			  }
-			}
-		  }
-		]
-	  },
-	  "jumps": {
-		"patterns": [
-		  {
-			"name": "keyword.control.flow.dialogue",
-			"match": "^(\\s*)(=>)\\s*([A-Za-z_][A-Za-z0-9_]*|END)$",
-			"captures": {
-			  "1": {
-				"name": "punctuation.whitespace.dialogue"
-			  },
-			  "2": {
-				"name": "keyword.operator.jump.dialogue"
-			  },
-			  "3": {
-				"name": "entity.name.function.jump-target.dialogue"
-			  }
-			}
-		  }
-		]
-	  },
-	  "translations": {
-		"patterns": [
-		  {
-			"name": "meta.translation.dialogue",
-			"match": "\\[TR:([^\\]]+)\\]",
-			"captures": {
-			  "1": {
-				"name": "string.quoted.single.translation-key.dialogue"
-			  }
-			}
-		  }
-		]
-	  },
-	  "bbcode": {
-		"patterns": [
-		  {
-			"name": "meta.tag.bbcode.dialogue",
-			"begin": "\\[",
-			"end": "\\]",
-			"beginCaptures": {
-			  "0": {
-				"name": "punctuation.definition.tag.begin.bbcode.dialogue"
-			  }
-			},
-			"endCaptures": {
-			  "0": {
-				"name": "punctuation.definition.tag.end.bbcode.dialogue"
-			  }
-			},
-			"patterns": [
-			  {
-				"name": "entity.name.tag.bbcode.dialogue",
-				"match": "/?\\b(b|i|u|s|code|url|img|color|size|font|center|right|left|quote|list|\\*|table|tr|td|th)\\b"
-			  },
-			  {
-				"name": "entity.other.attribute-name.bbcode.dialogue",
-				"match": "\\b\\w+(?==)"
-			  },
-			  {
-				"name": "string.quoted.double.bbcode.dialogue",
-				"match": "\"[^\"]*\""
-			  },
-			  {
-				"name": "keyword.operator.assignment.bbcode.dialogue",
-				"match": "="
-			  }
-			]
-		  }
-		]
-	  },
-	  "variables": {
-		"patterns": [
-		  {
-			"name": "variable.other.dialogue",
-			"match": "\\b[A-Za-z_][A-Za-z0-9_.]*\\b"
-		  },
-		  {
-			"name": "constant.numeric.dialogue",
-			"match": "\\b\\d+(\\.\\d+)?\\b"
-		  },
-		  {
-			"name": "string.quoted.double.dialogue",
-			"begin": "\"",
-			"end": "\"",
-			"patterns": [
-			  {
-				"name": "constant.character.escape.dialogue",
-				"match": "\\\\."
-			  }
-			]
-		  },
-		  {
-			"name": "string.quoted.single.dialogue",
-			"begin": "'",
-			"end": "'",
-			"patterns": [
-			  {
-				"name": "constant.character.escape.dialogue",
-				"match": "\\\\."
-			  }
-			]
-		  }
-		]
-	  },
-	  "operators": {
-		"patterns": [
-		  {
-			"name": "keyword.operator.comparison.dialogue",
-			"match": "(==|!=|<=|>=|<|>)"
-		  },
-		  {
-			"name": "keyword.operator.logical.dialogue",
-			"match": "\\b(and|or|not)\\b"
-		  },
-		  {
-			"name": "keyword.operator.arithmetic.dialogue",
-			"match": "(\\+|-|\\*|/|%)"
-		  },
-		  {
-			"name": "constant.language.boolean.dialogue",
-			"match": "\\b(true|false|null)\\b"
-		  }
-		]
-	  }
-	}
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Godot Dialog Manager",
+  "scopeName": "source.dialogue",
+  "fileTypes": ["dialogue"],
+  "patterns": [
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#titles"
+    },
+    {
+      "include": "#dialogue-metadata"
+    },
+    {
+      "include": "#scene-descriptions"
+    },
+    {
+      "include": "#character-lines"
+    },
+    {
+      "include": "#choices"
+    },
+    {
+      "include": "#conditions"
+    },
+    {
+      "include": "#mutations"
+    },
+    {
+      "include": "#jumps"
+    },
+    {
+      "include": "#variable-interpolation"
+    },
+    {
+      "include": "#translations"
+    },
+    {
+      "include": "#bbcode"
+    }
+  ],
+  "repository": {
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.godot-dialogmanager",
+          "match": "^\\s*(if|elif|else|do|do!|set|when|match|import|using)\\b"
+        }
+      ]
+    },
+    "strings": {
+      "name": "string.quoted.double.godot-dialogmanager",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.godot-dialogmanager",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.dialogue",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "titles": {
+      "patterns": [
+        {
+          "name": "markup.heading.dialogue",
+          "match": "^(~)\\s*(.+)$",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.heading.dialogue"
+            },
+            "2": {
+              "name": "entity.name.section.dialogue"
+            }
+          }
+        }
+      ]
+    },
+    "dialogue-metadata": {
+      "patterns": [
+        {
+          "name": "meta.dialogue-metadata.dialogue",
+          "match": "^\\[(#\\w+)(=)([^\\]]+)(\\])(\\[\\w+)(=)([^\\]]+)(\\])?$",
+          "captures": {
+            "1": {
+              "name": "support.type.property-name.dialogue"
+            },
+            "2": {
+              "name": "keyword.operator.assignment.dialogue"
+            },
+            "3": {
+              "name": "constant.numeric.dialogue"
+            },
+            "4": {
+              "name": "punctuation.definition.bracket.dialogue"
+            },
+            "5": {
+              "name": "support.type.property-name.dialogue"
+            },
+            "6": {
+              "name": "keyword.operator.assignment.dialogue"
+            },
+            "7": {
+              "name": "constant.numeric.dialogue"
+            },
+            "8": {
+              "name": "punctuation.definition.bracket.dialogue"
+            }
+          }
+        },
+        {
+          "name": "meta.dialogue-metadata-single.dialogue",
+          "match": "^\\[(#\\w+)(=)([^\\]]+)(\\])$",
+          "captures": {
+            "1": {
+              "name": "support.type.property-name.dialogue"
+            },
+            "2": {
+              "name": "keyword.operator.assignment.dialogue"
+            },
+            "3": {
+              "name": "constant.numeric.dialogue"
+            },
+            "4": {
+              "name": "punctuation.definition.bracket.dialogue"
+            }
+          }
+        }
+      ]
+    },
+    "scene-descriptions": {
+      "patterns": [
+        {
+          "name": "comment.block.scene-description.dialogue",
+          "match": "^#\\[.+?\\]$",
+          "captures": {
+            "0": {
+              "name": "markup.italic.dialogue"
+            }
+          }
+        }
+      ]
+    },
+    "character-lines": {
+      "patterns": [
+        {
+          "name": "meta.character-line.dialogue",
+          "match": "^([A-Za-z_][A-Za-z0-9_]*)(\\[([^\\]]+)\\])?(:)\\s*(.*)$",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.dialogue"
+            },
+            "2": {
+              "name": "meta.character-id.dialogue"
+            },
+            "3": {
+              "name": "constant.other.character-id.dialogue"
+            },
+            "4": {
+              "name": "punctuation.separator.dialogue"
+            },
+            "5": {
+              "name": "string.quoted.other.dialogue-text.dialogue",
+              "patterns": [
+                {
+                  "include": "#bbcode"
+                },
+                {
+                  "include": "#variable-interpolation"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "choices": {
+      "patterns": [
+        {
+          "name": "meta.choice.dialogue",
+          "match": "^(\\s*)(-)\\s*(.+)$",
+          "captures": {
+            "1": {
+              "name": "punctuation.whitespace.dialogue"
+            },
+            "2": {
+              "name": "keyword.other.choice.dialogue"
+            },
+            "3": {
+              "name": "string.quoted.other.choice-text.dialogue"
+            }
+          }
+        }
+      ]
+    },
+    "conditions": {
+      "patterns": [
+        {
+          "name": "meta.condition.dialogue",
+          "match": "^(\\s*)if\\s+(.+):\\s*$",
+          "captures": {
+            "1": {
+              "name": "punctuation.whitespace.dialogue"
+            },
+            "2": {
+              "name": "source.embedded.gdscript",
+              "patterns": [
+                {
+                  "include": "#variables"
+                },
+                {
+                  "include": "#operators"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "keyword.control.conditional.dialogue",
+          "match": "^(\\s*)(elif|else)\\s*:?\\s*$"
+        }
+      ]
+    },
+    "mutations": {
+      "patterns": [
+        {
+          "name": "meta.mutation.dialogue",
+          "match": "^(\\s*)do\\s+(.+)$",
+          "captures": {
+            "1": {
+              "name": "punctuation.whitespace.dialogue"
+            },
+            "2": {
+              "name": "source.embedded.gdscript",
+              "patterns": [
+                {
+                  "include": "#variables"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "meta.mutation.dialogue",
+          "match": "^(\\s*)set\\s+([A-Za-z_][A-Za-z0-9_.]*)\\s*(=|\\+=|-=|\\*=|/=)\\s*(.+)$",
+          "captures": {
+            "1": {
+              "name": "punctuation.whitespace.dialogue"
+            },
+            "2": {
+              "name": "variable.other.dialogue"
+            },
+            "3": {
+              "name": "keyword.operator.assignment.dialogue"
+            },
+            "4": {
+              "name": "source.embedded.gdscript"
+            }
+          }
+        }
+      ]
+    },
+    "jumps": {
+      "patterns": [
+        {
+          "name": "keyword.control.flow.dialogue",
+          "match": "^(\\s*)(=>)\\s*([A-Za-z_][A-Za-z0-9_]*|END)$",
+          "captures": {
+            "1": {
+              "name": "punctuation.whitespace.dialogue"
+            },
+            "2": {
+              "name": "keyword.operator.arrow.dialogue"
+            },
+            "3": {
+              "name": "constant.language.jump-target.dialogue"
+            }
+          }
+        }
+      ]
+    },
+    "variable-interpolation": {
+      "patterns": [
+        {
+          "name": "variable.other.interpolation.dialogue",
+          "match": "(\\{)([^}]+)(\\})",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.variable.begin.dialogue"
+            },
+            "2": {
+              "name": "variable.language.special.dialogue"
+            },
+            "3": {
+              "name": "punctuation.definition.variable.end.dialogue"
+            }
+          }
+        }
+      ]
+    },
+    "translations": {
+      "patterns": [
+        {
+          "name": "meta.translation.dialogue",
+          "match": "\\[TR:([^\\]]+)\\]",
+          "captures": {
+            "1": {
+              "name": "string.quoted.single.translation-key.dialogue"
+            }
+          }
+        }
+      ]
+    },
+    "bbcode": {
+      "patterns": [
+        {
+          "name": "meta.tag.bbcode.dialogue",
+          "begin": "\\[",
+          "end": "\\]",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.tag.begin.bbcode.dialogue"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.tag.end.bbcode.dialogue"
+            }
+          },
+          "patterns": [
+            {
+              "name": "entity.name.tag.bbcode.dialogue",
+              "match": "/?\\b(b|i|u|s|code|url|img|color|size|font|center|right|left|quote|list|\\*|table|tr|td|th)\\b"
+            },
+            {
+              "name": "entity.other.attribute-name.bbcode.dialogue",
+              "match": "\\b\\w+(?==)"
+            },
+            {
+              "name": "string.quoted.double.bbcode.dialogue",
+              "match": "\"[^\"]*\""
+            },
+            {
+              "name": "keyword.operator.assignment.bbcode.dialogue",
+              "match": "="
+            }
+          ]
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.dialogue",
+          "match": "\\b[A-Za-z_][A-Za-z0-9_.]*\\b"
+        },
+        {
+          "name": "constant.numeric.dialogue",
+          "match": "\\b\\d+(\\.\\d+)?\\b"
+        },
+        {
+          "name": "string.quoted.double.dialogue",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.dialogue",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.dialogue",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.dialogue",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.comparison.dialogue",
+          "match": "(==|!=|<=|>=|<|>)"
+        },
+        {
+          "name": "keyword.operator.logical.dialogue",
+          "match": "\\b(and|or|not)\\b"
+        },
+        {
+          "name": "keyword.operator.arithmetic.dialogue",
+          "match": "(\\+|-|\\*|/|%)"
+        },
+        {
+          "name": "constant.language.boolean.dialogue",
+          "match": "\\b(true|false|null)\\b"
+        }
+      ]
+    }
   }
+}
