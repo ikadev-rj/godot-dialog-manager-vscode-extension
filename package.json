@@ -4,12 +4,12 @@
   "description": "to handle godot dialog manager files",
   "version": "0.0.1",
   "repository": {
-  "type": "git",
-  "url": "https://github.com/ikadev-rj/godot-dialog-manager-vscode-extension.git"
+    "type": "git",
+    "url": "https://github.com/ikadev-rj/godot-dialog-manager-vscode-extension.git"
   },
   "bugs": {
     "url": "https://github.com/ikadev-rj/godot-dialog-manager-vscode-extension/issues"
-  }
+  },
   "engines": {
     "vscode": "^1.101.0"
   },
